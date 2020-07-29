@@ -16,7 +16,7 @@ colorMixingArr = Array.from(new Set(colorMixingArr));
 
 const ColorMixingBtn = props => (
   <button
-    className="color"
+    className="colorBtn"
     style={{ backgroundColor: props.colorMixing }}
   >
     {props.colorMixing}
@@ -26,6 +26,7 @@ const ColorMixingBtn = props => (
 const Game = () => {
   return (
     <div className="body">
+      <h1>Color Mixing Game</h1>
       <div className="left">
 
       </div>

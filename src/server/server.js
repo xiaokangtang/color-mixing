@@ -7,19 +7,7 @@ const server = express();
 server.use(express.static('dist'));
 
 server.get('/', (req, res) => {
-  const initialMarkup = ReactDOMServer.renderToString(<App />);
-
-  res.send(`
-    <html>
-      <head>
-        <title>Sample React App</title>
-      </head>
-      <body>
-        <div id="mountNode">${initialMarkup}</div>
-        <script src="/main.js"></script>
-      </body>
-    </html>
-  `)
+  res.sendFile(path.resolve(__dirname, 'dist/index.html'))
 });
 
 server.listen(4242, () => console.log('Server is running...'));
