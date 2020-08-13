@@ -40,7 +40,7 @@ colorMixingArr = Array.from(new Set(colorMixingArr));
 
 const setGame = () => {
   const [colorsMixed, setColorsMixed] = useState(colorsMixedArr);
-  const [colorLeft, setColorLeft] = useState(mixedColor);
+  const [correctNum, setCorrectNum] = useState(0);
   const [status, setStatus] = useState('');
   const [chosenColors, setChosenColors] = useState([]);
   const [gameStatus, setGameStatus] = useState('incomplete');
@@ -53,18 +53,17 @@ const setGame = () => {
     setColorsMixed(colorsMixed.filter(c => c !== mixedColor));
     if (correctAns.sort().join() === chosenColors.sort().join()) {
       setStatus('correct');
+      setCorrectNum(correctNum + 1);
     } else {
       setStatus('incorrect');
     }
     if (colorsMixed.length === 1) {
       setGameStatus('complete');
     } else {
-      const newColorLeft = colorsMixed[Math.floor(Math.random() * colorsMixed.length)];
       setChosenColors([]);
-      setColorLeft(newColorLeft);
     }
   }
-  return { mixedColor, status, chosenColors, mixCheck, gameStatus };
+  return { mixedColor, status, chosenColors, mixCheck, gameStatus, correctNum };
 }
 
 const ColorGame = () => {
@@ -79,6 +78,7 @@ const Game = props => {
     chosenColors,
     mixCheck,
     gameStatus,
+    correctNum,
   } = setGame();
 
   const onBtnClick = (chosenColor) => {
@@ -111,11 +111,13 @@ const Game = props => {
       }
       
       <div>
-        {status === 'correct'
-          ? (<p>Correct!</p>)
-          : status === 'incorrect'
-            ? (<p>Incorrect!</p>)
-            : (<p>Please select</p>)}
+        { gameStatus === 'complete' ? (
+          <p>{correctNum} correct</p>
+        ) : status === 'correct'
+            ? (<p>Correct!</p>)
+            : status === 'incorrect'
+              ? (<p>Incorrect!</p>)
+              : (<p>Please select</p>)}
       </div>
     </div>
   );
