@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import './style.css';
-import Game from './Game';
+import ColorGame from './Game';
 
 const App = () => {
-  return <Game />;
+  return <ColorGame />;
 };
 
 export default App;
