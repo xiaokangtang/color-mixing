@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import './style.css';
-import ColorGame from './Game';
+import Game from './Game';
 
 const App = () => {
-  return <ColorGame />;
+  const [gameId, setGameId] = useState(1);
+  return <Game key={gameId} startNewGame={() => setGameId(gameId + 1)} />;
 };
 
 export default App;

@@ -1,13 +1,14 @@
 import express from 'express';
-import React from 'react';
-import ReactDOMServer from 'react-dom/server';
-import App from '../components/App';
+
+require('dotenv').config();
 
 const server = express();
+const port = process.env.PORT;
+
 server.use(express.static('dist'));
 
 server.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'dist/index.html'))
 });
 
-server.listen(4242, () => console.log('Server is running...'));
+server.listen(port, () => console.log('Server is running...'));

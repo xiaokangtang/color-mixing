@@ -1,70 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
 
-const useStyles = createUseStyles({
-  myBtn: {
-    border: [
-      ['thin', 'solid', '#ddd']
-    ],
-    width: 45,
-    height: 45,
-    margin: 10,
-    'font-size': '25px',
-    backgroundColor: props => props.colorMixing,
-  }
-});
-
-const ColorMixingBtn = props => {
-  const classes = useStyles(props);
-  return(
-    <button
-    className= {classes.myBtn}
-    onClick={() => props.onClick(props.colorMixing)}
-  >
-  </button>
-  )
-};
-
-const MixedColor = props => (
-  <div
-    className = 'mixedColor'
-    style={{ backgroundColor: props.mixedColor}} 
-  >
-  </div>
-);
-
-const PlayAgain = props => (
-  <div>
-    <button onClick={props.onClick}>Play Again</button>
-  </div>
-);
-
-const Timer = props => {
-  const [seconds, setSeconds] = useState(0);
-  useEffect(() => {
-    let interval = null;
-    if (props.gameStatus !== 'complete') {
-      interval = setInterval(() => {
-        setSeconds(seconds => seconds + 1);
-      }, 1000);
-    } else {
-      clearInterval(interval);
-    }
-    return () => clearInterval(interval);
-  }, [seconds, props.gameStatus]);
-
-  return (
-    props.gameStatus === 'complete' ? (
-      <div>
-        <p>You used {seconds}s</p>
-      </div>
-    ) : (
-      <div>
-        <p>{seconds}</p>
-      </div>
-    )
-  )
-}
+import ColorMixingBtn from './ColorMixingBtn';
+import MixedColor from './MixedColor';
+import PlayAgain from './PlayAgain';
+import Timer from './Timer';
 
 const colors = {
   'orange': ['red', 'yellow'],
@@ -109,11 +49,6 @@ const setGame = () => {
   return { mixedColor, status, chosenColors, mixCheck, gameStatus, correctNum };
 }
 
-const ColorGame = () => {
-  const [gameId, setGameId] = useState(1);
-  return <Game key={gameId} startNewGame={() => setGameId(gameId + 1)} />;
-}
-
 const Game = props => {
   const {
     mixedColor,
@@ -134,23 +69,23 @@ const Game = props => {
     <div>
       <h1>Color Mixing Game</h1>
       {gameStatus === 'incomplete' ? (
-        <div className="body">
-          <div className="left">
-            <MixedColor mixedColor={mixedColor} />
+          <div className="body">
+            <div className="left">
+              <MixedColor mixedColor={mixedColor} />
+            </div>
+            <div className="right">
+              {colorMixingArr.map((colorMixing, index) => (
+                <ColorMixingBtn
+                  key={index}
+                  colorMixing={colorMixing}
+                  onClick={onBtnClick}
+                />
+              ))}
+            </div>
           </div>
-          <div className="right">
-            {colorMixingArr.map((colorMixing, index) => (
-              <ColorMixingBtn
-                key={index}
-                colorMixing={colorMixing}
-                onClick={onBtnClick}
-              />
-            ))}
-          </div>
-        </div>
-      ) : (
-        <PlayAgain onClick={props.startNewGame} />
-      )
+        ) : (
+          <PlayAgain onClick={props.startNewGame} />
+        )
       }
       
       <div>
@@ -167,4 +102,4 @@ const Game = props => {
   );
 };
 
-export default ColorGame;
+export default Game;
