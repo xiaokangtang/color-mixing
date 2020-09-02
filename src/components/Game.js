@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { createUseStyles } from 'react-jss';
+import React, { useState } from 'react';
 
 import ColorMixingBtn from './ColorMixingBtn';
 import MixedColor from './MixedColor';
@@ -32,19 +31,23 @@ const setGame = () => {
   const mixedColor = colorsMixed[ind];
   const correctAns = colors[mixedColor];
 
-  const mixCheck = (chosenColors) => {
-    setColorsMixed(colorsMixed.filter(c => c !== mixedColor));
-    if (correctAns.sort().join() === chosenColors.sort().join()) {
-      setStatus('correct');
-      setCorrectNum(correctNum + 1);
-    } else {
-      setStatus('incorrect');
+  const mixCheck = (chosenColor) => {
+    setChosenColors(chosenColors.concat(chosenColor));
+    if (chosenColors.length >= 2) {
+      setColorsMixed(colorsMixed.filter(c => c !== mixedColor));
+      if (correctAns.sort().join() === chosenColors.sort().join()) {
+        setStatus('correct');
+        setCorrectNum(correctNum + 1);
+      } else {
+        setStatus('incorrect');
+      }
+      if (colorsMixed.length === 1) {
+        setGameStatus('complete');
+      } else {
+        setChosenColors([]);
+      }
     }
-    if (colorsMixed.length === 1) {
-      setGameStatus('complete');
-    } else {
-      setChosenColors([]);
-    }
+    
   }
   return { mixedColor, status, chosenColors, mixCheck, gameStatus, correctNum };
 }
@@ -60,9 +63,13 @@ const Game = props => {
   } = setGame();
 
   const onBtnClick = (chosenColor) => {
-    chosenColors.push(chosenColor);
-    if (chosenColors.length >= 2) {
-      mixCheck(chosenColors);
+    mixCheck(chosenColor);
+  }
+  const btnStatus = (color) => {
+    if (chosenColors.includes(color) && chosenColors.length < 2) {
+      return '2px dotted red';
+    } else {
+      return 'none';
     }
   }
   return (
@@ -79,6 +86,7 @@ const Game = props => {
                   key={index}
                   colorMixing={colorMixing}
                   onClick={onBtnClick}
+                  outline={btnStatus(colorMixing)}
                 />
               ))}
             </div>

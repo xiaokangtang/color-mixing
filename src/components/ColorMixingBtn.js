@@ -2,7 +2,7 @@ import React from 'react';
 import { createUseStyles } from 'react-jss';
 
 const useStyles = createUseStyles({
-  myBtn: {
+  mixingBtn: {
     border: [
       ['thin', 'solid', '#ddd']
     ],
@@ -11,6 +11,7 @@ const useStyles = createUseStyles({
     margin: 10,
     'font-size': '25px',
     backgroundColor: props => props.colorMixing,
+    outline: props => props.outline,
   }
 });
 
@@ -18,9 +19,10 @@ const ColorMixingBtn = props => {
   const classes = useStyles(props);
   return(
     <button
-    className= {classes.myBtn}
-    onClick={() => props.onClick(props.colorMixing)}
-  >
+      className= {classes.mixingBtn}
+      style={{ outline: props.outline }}
+      onClick={() => props.onClick(props.colorMixing)}
+    >
   </button>
   )
 };
