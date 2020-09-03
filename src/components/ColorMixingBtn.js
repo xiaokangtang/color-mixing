@@ -20,7 +20,6 @@ const ColorMixingBtn = props => {
   return(
     <button
       className= {classes.mixingBtn}
-      style={{ outline: props.outline }}
       onClick={() => props.onClick(props.colorMixing)}
     >
   </button>
