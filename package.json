@@ -5,10 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "sass": "sass src/stylesheets/index.scss src/components/style.css",
     "dev-server": "nodemon --exec babel-node src/server/server.js --ignore dist/",
     "dev-bundle": "webpack -w -d",
-    "start": "concurrently \"npm run dev-server\" \"npm run dev-bundle\" \"npm run sass\""
+    "start": "concurrently \"npm run dev-server\" \"npm run dev-bundle\""
   },
   "author": "",
   "license": "ISC",
