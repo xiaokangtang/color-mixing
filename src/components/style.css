@@ -18,14 +18,4 @@ h1 {
   width: 50%;
   border: thin solid #ddd;
 }
-
-.colorBtn, .mixedColor {
-  background-color: #eee;
-  border: thin solid #ddd;
-  width: 45px;
-  height: 45px;
-  margin: 10px;
-  font-size: 25px;
-}
-
 /*# sourceMappingURL=style.css.map */
