@@ -25,32 +25,30 @@ const setGame = () => {
   const [correctNum, setCorrectNum] = useState(0);
   const [status, setStatus] = useState('');
   const [chosenColors, setChosenColors] = useState([]);
+  const [gameStatus, setGameStatus] = useState('incomplete');
   const [mixedColor, setMixedColor] = useState(colorsMixed[Math.floor(Math.random() * colorsMixed.length)]);
   const [correctAns, setCorrectAns] = useState(colors[mixedColor]);
-  const [gameStatus, setGameStatus] = useState('incomplete');
 
-  const mixCheck = (chosenColor) => {
-    setChosenColors(chosenColors.concat(chosenColor));
-    if (chosenColors.concat(chosenColor).length >= 2) {
-      if (correctAns.sort().join() === chosenColors.concat(chosenColor).sort().join()) {
-        setStatus('correct');
-        setCorrectNum(correctNum + 1);
-      } else {
-        setStatus('incorrect');
-      }
-      if (colorsMixed.length === 1) {
-        setGameStatus('complete');
-      } else {
-        setChosenColors([]);
-        let ind = Math.floor(Math.random() * colorsMixed.filter(c => c !== mixedColor).length);
-        setColorsMixed(colorsMixed.filter(c => c !== mixedColor));
-        setMixedColor(colorsMixed.filter(c => c !== mixedColor)[ind]);
-        setCorrectAns(colors[colorsMixed.filter(c => c !== mixedColor)[ind]]);
-      }
+  const mixCheck = (chosenColors) => {
+    console.log(chosenColors);
+    setColorsMixed(colorsMixed.filter(c => c !== mixedColor));
+    if (correctAns.sort().join() === chosenColors.sort().join()) {
+      setStatus('correct');
+      setCorrectNum(correctNum + 1);
+    } else {
+      setStatus('incorrect');
     }
-    
+    if (colorsMixed.length === 1) {
+      setGameStatus('complete');
+    } else {
+      setChosenColors([]);
+      let ind = Math.floor(Math.random() * colorsMixed.filter(c => c !== mixedColor).length);
+      setColorsMixed(colorsMixed.filter(c => c !== mixedColor));
+      setMixedColor(colorsMixed.filter(c => c !== mixedColor)[ind]);
+      setCorrectAns(colors[colorsMixed.filter(c => c !== mixedColor)[ind]]);
+    }
   }
-  return { mixedColor, status, chosenColors, mixCheck, gameStatus, correctNum };
+  return { mixedColor, status, chosenColors, setChosenColors, mixCheck, gameStatus, correctNum };
 }
 
 const Game = props => {
@@ -58,19 +56,16 @@ const Game = props => {
     mixedColor,
     status,
     chosenColors,
+    setChosenColors,
     mixCheck,
     gameStatus,
     correctNum,
   } = setGame();
 
-  const onBtnClick = (chosenColor) => {
-    mixCheck(chosenColor);
-  }
-  const btnStatus = (color) => {
-    if (chosenColors.includes(color) && chosenColors.length < 2) {
-      return '2px dotted red';
-    } else {
-      return 'none';
+  const onBtnClick = (newColor) => {
+    setChosenColors([...chosenColors, newColor]);
+    if (chosenColors.length >= 1) {
+      mixCheck(chosenColors.concat(newColor));
     }
   }
   return (
@@ -82,14 +77,18 @@ const Game = props => {
               <MixedColor mixedColor={mixedColor} />
             </div>
             <div className="right">
-              {colorMixingArr.map((colorMixing, index) => (
-                <ColorMixingBtn
-                  key={index}
-                  colorMixing={colorMixing}
-                  onClick={onBtnClick}
-                  outline={btnStatus(colorMixing)}
-                />
-              ))}
+              {colorMixingArr.map((colorMixing) => {
+                console.log(chosenColors);
+                const selected = (chosenColors.indexOf(colorMixing) > -1);
+                return (
+                  <ColorMixingBtn
+                    key={`color-${colorMixing}`}
+                    selected={selected}
+                    colorMixing={colorMixing}
+                    onClick={onBtnClick}
+                  />
+                )
+              })}
             </div>
           </div>
         ) : (
