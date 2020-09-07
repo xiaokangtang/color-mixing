@@ -30,7 +30,6 @@ const setGame = () => {
   const [correctAns, setCorrectAns] = useState(colors[mixedColor]);
 
   const mixCheck = (chosenColors) => {
-    console.log(chosenColors);
     setColorsMixed(colorsMixed.filter(c => c !== mixedColor));
     if (correctAns.sort().join() === chosenColors.sort().join()) {
       setStatus('correct');
@@ -78,12 +77,11 @@ const Game = props => {
             </div>
             <div className="right">
               {colorMixingArr.map((colorMixing) => {
-                console.log(chosenColors);
-                const selected = (chosenColors.indexOf(colorMixing) > -1);
+                const outline = (chosenColors.indexOf(colorMixing) > -1 ? '3px dotted red' : 'none');
                 return (
                   <ColorMixingBtn
                     key={`color-${colorMixing}`}
-                    selected={selected}
+                    outline={outline}
                     colorMixing={colorMixing}
                     onClick={onBtnClick}
                   />

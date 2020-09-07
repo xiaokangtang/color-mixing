@@ -9,6 +9,7 @@ const useStyles = createUseStyles({
     width: 45,
     height: 45,
     margin: 10,
+    transition: 'all 0.5s',
     'font-size': '25px',
     backgroundColor: props => props.mixedColor,
   }
