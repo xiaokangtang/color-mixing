@@ -38,13 +38,18 @@ const setGame = () => {
       setStatus('incorrect');
     }
     if (colorsMixed.length === 1) {
-      setGameStatus('complete');
+      setTimeout(() => {
+        setGameStatus('complete');
+      }, 1000);
     } else {
-      setChosenColors([]);
-      let ind = Math.floor(Math.random() * colorsMixed.filter(c => c !== mixedColor).length);
-      setColorsMixed(colorsMixed.filter(c => c !== mixedColor));
-      setMixedColor(colorsMixed.filter(c => c !== mixedColor)[ind]);
-      setCorrectAns(colors[colorsMixed.filter(c => c !== mixedColor)[ind]]);
+      setTimeout(() => {
+        setChosenColors([]);
+        let ind = Math.floor(Math.random() * colorsMixed.filter(c => c !== mixedColor).length);
+        setColorsMixed(colorsMixed.filter(c => c !== mixedColor));
+        setMixedColor(colorsMixed.filter(c => c !== mixedColor)[ind]);
+        setCorrectAns(colors[colorsMixed.filter(c => c !== mixedColor)[ind]]);
+        setStatus('newSet');
+      }, 1000)
     }
   }
   return { mixedColor, status, chosenColors, setChosenColors, mixCheck, gameStatus, correctNum };
@@ -67,6 +72,17 @@ const Game = props => {
       mixCheck(chosenColors.concat(newColor));
     }
   }
+
+  const checkBtnStatus = (c) => {
+    if (chosenColors.indexOf(c) > -1) {
+      return status === 'correct' ? '3px solid green'
+            : status === 'incorrect' ? '3px solid red'
+            : '3px dotted blue';
+    } else {
+      return 'none';
+    }
+  }
+  
   return (
     <div>
       <h1>Color Mixing Game</h1>
@@ -77,7 +93,7 @@ const Game = props => {
             </div>
             <div className="right">
               {colorMixingArr.map((colorMixing) => {
-                const outline = (chosenColors.indexOf(colorMixing) > -1 ? '3px dotted red' : 'none');
+                const outline = checkBtnStatus(colorMixing);
                 return (
                   <ColorMixingBtn
                     key={`color-${colorMixing}`}
