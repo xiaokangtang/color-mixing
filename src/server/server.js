@@ -4,6 +4,7 @@ require('dotenv').config();
 
 const server = express();
 const port = process.env.PORT;
+const path = require('path');
 
 server.use(express.static('dist'));
 
