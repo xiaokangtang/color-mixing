@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import {useSpring, animated} from 'react-spring';
 
 import ColorMixingBtn from './ColorMixingBtn';
 import MixedColor from './MixedColor';
@@ -40,7 +41,7 @@ const setGame = () => {
     if (colorsMixed.length === 1) {
       setTimeout(() => {
         setGameStatus('complete');
-      }, 1000);
+      }, 2000);
     } else {
       setTimeout(() => {
         setChosenColors([]);
@@ -49,10 +50,10 @@ const setGame = () => {
         setMixedColor(colorsMixed.filter(c => c !== mixedColor)[ind]);
         setCorrectAns(colors[colorsMixed.filter(c => c !== mixedColor)[ind]]);
         setStatus('newSet');
-      }, 1000)
+      }, 2000)
     }
   }
-  return { mixedColor, status, chosenColors, setChosenColors, mixCheck, gameStatus, correctNum };
+  return { mixedColor, status, chosenColors, setChosenColors, mixCheck, gameStatus, correctNum};
 }
 
 const Game = props => {
@@ -65,6 +66,10 @@ const Game = props => {
     gameStatus,
     correctNum,
   } = setGame();
+
+  const x = useSpring({
+    to: [{opacity: 0, color: 'blue'}, {opacity: 1, color: 'blue'}],
+    from: {opacity: 1, color: 'blue'}});
 
   const onBtnClick = (newColor) => {
     setChosenColors([...chosenColors, newColor]);
@@ -112,11 +117,11 @@ const Game = props => {
       
       <div>
         { gameStatus === 'complete' ? (
-          <p>{correctNum} correct</p>
+          <animated.div style={x}>{correctNum} correct</animated.div>
         ) : status === 'correct'
-            ? (<p>Correct!</p>)
+            ? (<animated.div style={x}>Correct!</animated.div>)
             : status === 'incorrect'
-              ? (<p>Incorrect!</p>)
+              ? (<animated.div style={x}>Incorrect!</animated.div>)
               : (<p>Please select</p>)}
       </div>
       <Timer gameStatus={gameStatus} />
