@@ -24,7 +24,7 @@ colorMixingArr = Array.from(new Set(colorMixingArr));
 const setGame = () => {
   const [colorsMixed, setColorsMixed] = useState(colorsMixedArr);
   const [correctNum, setCorrectNum] = useState(0);
-  const [status, setStatus] = useState('');
+  const [status, setStatus] = useState('newSet');
   const [chosenColors, setChosenColors] = useState([]);
   const [gameStatus, setGameStatus] = useState('incomplete');
   const [mixedColor, setMixedColor] = useState(colorsMixed[Math.floor(Math.random() * colorsMixed.length)]);
@@ -67,9 +67,12 @@ const Game = props => {
     correctNum,
   } = setGame();
 
-  const x = useSpring({
-    to: [{opacity: 0, color: 'blue'}, {opacity: 1, color: 'blue'}],
-    from: {opacity: 1, color: 'blue'}});
+  const fb = useSpring({
+    from: {opacity: status === 'newSet' ? 1 : 0},
+    to: {opacity: 1, 
+         color: status === 'correct' ? 'green' : status === 'incorrect' ? 'red' : 'blue'},
+    reset: true
+  });
 
   const onBtnClick = (newColor) => {
     setChosenColors([...chosenColors, newColor]);
@@ -115,15 +118,15 @@ const Game = props => {
         )
       }
       
-      <div>
+      <animated.div style={fb}>
         { gameStatus === 'complete' ? (
-          <animated.div style={x}>{correctNum} correct</animated.div>
+          <p>{correctNum} correct</p>
         ) : status === 'correct'
-            ? (<animated.div style={x}>Correct!</animated.div>)
+            ? (<p>Correct!</p>)
             : status === 'incorrect'
-              ? (<animated.div style={x}>Incorrect!</animated.div>)
+              ? (<p>Incorrect!</p>)
               : (<p>Please select</p>)}
-      </div>
+      </animated.div>
       <Timer gameStatus={gameStatus} />
     </div>
   );
