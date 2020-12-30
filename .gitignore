@@ -1,6 +1,7 @@
+.DS_Store
 .env
 __snapshots__/
+coverage/
 dist/
 node_modules/
 package-lock.json
-.DS_Store
