@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
 
 const useStyles = createUseStyles({
@@ -24,6 +25,11 @@ const ColorMixingBtn = props => {
       onClick={() => props.onClick(props.colorMixing)}
     ></button>
   )
+};
+
+ColorMixingBtn.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  colorMixing: PropTypes.string.isRequired
 };
 
 export default ColorMixingBtn;

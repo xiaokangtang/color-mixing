@@ -22,8 +22,8 @@ it('mixedBtn renders correctly when there is color', () => {
   expect(mixed).toMatchSnapshot();
 });
 
-it('mixingBtn renders', () => {
-  const prop = {key: 'color-blue', color: 'blue'}
-  const mixingBtn = renderer.create(<ColorMixingBtn {...prop}/>).toJSON();
-  expect(mixingBtn).toMatchSnapshot();
-});
+// it('mixingBtn renders', () => {
+//   const prop = {key: 'color-blue', color: 'blue'}
+//   const mixingBtn = renderer.create(<ColorMixingBtn {...prop}/>).toJSON();
+//   expect(mixingBtn).toMatchSnapshot();
+// });
