@@ -3,7 +3,6 @@ import renderer from 'react-test-renderer';
 
 import Game from "./Game";
 import MixedColor from "./MixedColor";
-import ColorMixingBtn from "./ColorMixingBtn";
 
 it('renders correctly when there are no items', () => {
   const tree = renderer.create(<Game />).toJSON();
