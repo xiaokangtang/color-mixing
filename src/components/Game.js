@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import {useSpring, animated} from 'react-spring';
 
 import ColorMixingBtn from './ColorMixingBtn';
@@ -6,6 +7,10 @@ import MixedColor from './MixedColor';
 import PlayAgain from './PlayAgain';
 import Timer from './Timer';
 
+/** 
+ * store game rules in object colors
+ * key (e.g. 'orange') is mixed by its properties arra (e.g. ['red', 'yellow'])
+*/
 const colors = {
   'orange': ['red', 'yellow'],
   'grey': ['black', 'white'],
@@ -20,7 +25,7 @@ colorsMixedArr.forEach((key) => {
 });
 colorMixingArr = Array.from(new Set(colorMixingArr));
 
-
+// set game on every render
 const setGame = () => {
   const [colorsMixed, setColorsMixed] = useState(colorsMixedArr);
   const [correctNum, setCorrectNum] = useState(0);
@@ -30,8 +35,9 @@ const setGame = () => {
   const [mixedColor, setMixedColor] = useState(colorsMixed[Math.floor(Math.random() * colorsMixed.length)]);
   const [correctAns, setCorrectAns] = useState(colors[mixedColor]);
 
+  // check result every time two ColorMixingBtn get clicked
   const mixCheck = (chosenColors) => {
-    setColorsMixed(colorsMixed.filter(c => c !== mixedColor));
+    setColorsMixed(colorsMixed.filter(c => c !== mixedColor)); //update MixedColor
     if (correctAns.sort().join() === chosenColors.sort().join()) {
       setStatus('correct');
       setCorrectNum(correctNum + 1);
@@ -43,6 +49,7 @@ const setGame = () => {
         setGameStatus('complete');
       }, 2000);
     } else {
+      // if not complete, render new gameset
       setTimeout(() => {
         setChosenColors([]);
         let ind = Math.floor(Math.random() * colorsMixed.filter(c => c !== mixedColor).length);
@@ -67,6 +74,7 @@ const Game = props => {
     correctNum,
   } = setGame();
 
+  //useSpring for feedback
   const fb = useSpring({
     from: {opacity: status === 'newSet' ? 1 : 0},
     to: {opacity: 1, 
@@ -74,6 +82,7 @@ const Game = props => {
     reset: true
   });
 
+  //ColorMixingBtn onclick - check if there are 2 chosen colors
   const onBtnClick = (newColor) => {
     setChosenColors([...chosenColors, newColor]);
     if (chosenColors.length >= 1) {
@@ -81,6 +90,7 @@ const Game = props => {
     }
   }
 
+  //check ColorMixingBtn for outline
   const checkBtnStatus = (c) => {
     if (chosenColors.indexOf(c) > -1) {
       return status === 'correct' ? '3px solid green'
@@ -130,6 +140,10 @@ const Game = props => {
       <Timer gameStatus={gameStatus} />
     </div>
   );
+};
+
+Game.propTypes = {
+  startNewGame: PropTypes.func.isRequired
 };
 
 export default Game;

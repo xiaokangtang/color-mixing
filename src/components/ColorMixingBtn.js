@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
-
+/**
+ * Component for mixing color btn (options for users to choose from).
+ */
 const useStyles = createUseStyles({
   mixingBtn: {
     border: [
@@ -13,6 +15,7 @@ const useStyles = createUseStyles({
     'font-size': '25px',
     transform: 'scale(1)',
     backgroundColor: props => props.colorMixing,
+    /** outline changes onclick to indicate btn getting clicked */
     outline: props => props.outline,
   }
 });
@@ -29,7 +32,8 @@ const ColorMixingBtn = props => {
 
 ColorMixingBtn.propTypes = {
   onClick: PropTypes.func.isRequired,
-  colorMixing: PropTypes.string.isRequired
+  colorMixing: PropTypes.string.isRequired,
+  outline: PropTypes.string
 };
 
 export default ColorMixingBtn;

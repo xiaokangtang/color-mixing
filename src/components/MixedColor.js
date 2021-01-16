@@ -1,6 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
-
+/**
+ * Component for mixed color (aka question).
+ */
 const useStyles = createUseStyles({
   mixedBtn: {
     border: [
@@ -22,6 +25,13 @@ const MixedColor = props => {
       className = {classes.mixedBtn}>
     </div>
   )
+};
+
+MixedColor.propTypes = {
+  /**
+   * mixedColor: randomly generated from remaining mixedcolors
+   */
+  mixedColor: PropTypes.string.isRequired
 };
 
 export default MixedColor;
