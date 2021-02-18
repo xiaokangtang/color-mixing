@@ -21,6 +21,7 @@ const App = () => {
       </nav>
       <Router>
         <Home path="/" />
+
         <Game
           path="game"
           key={gameId}

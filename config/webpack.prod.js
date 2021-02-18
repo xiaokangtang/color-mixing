@@ -18,19 +18,19 @@ module.exports = merge(common, {
         test: /\.css$/,
         use: [
           { loader: MiniCssExtractPlugin.loader },
-          { loader: 'css-loader'}
+          { loader: 'css-loader' },
+          { loader: 'postcss-loader' },
         ],
-        
       },
       {
         test: /\.s(a|c)ss$/,
         use: [
           { loader: MiniCssExtractPlugin.loader },
           { loader: 'css-loader' },
-          { loader: 'sass-loader' }
-        ]
+          { loader: 'sass-loader' },
+        ],
       },
-    ]
+    ],
   },
   optimization: {
     splitChunks: {
@@ -42,12 +42,12 @@ module.exports = merge(common, {
     new CleanWebpackPlugin([path.resolve(__dirname, '../dist')], {
       root: process.cwd(),
       verbose: true,
-      dry: false
+      dry: false,
     }),
     new OptimizeCssAssetsPlugin(),
     new MiniCssExtractPlugin({
       filename: '[name].css',
-      chunkFilename: '[id].css'
+      chunkFilename: '[id].css',
     }),
     new ManifestPlugin(),
     new BundleAnalyzerPlugin({

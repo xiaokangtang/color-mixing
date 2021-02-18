@@ -123,6 +123,7 @@ const Game = (props) => {
           <div className="right">
             {colorMixingArr.map((colorMixing) => {
               const outline = checkBtnStatus(colorMixing);
+              console.log(outline);
               return (
                 <ColorMixingBtn
                   key={`color-${colorMixing}`}

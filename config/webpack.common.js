@@ -8,7 +8,7 @@ module.exports = {
   output: {
     filename: '[name].[hash].js',
     path: path.resolve(__dirname, '../dist/'),
-    publicPath: '/'
+    publicPath: '/',
   },
   devServer: {
     port: 3042,
@@ -21,7 +21,7 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         exclude: [/node_modules/],
-        use: [{ loader: 'babel-loader' }]
+        use: [{ loader: 'babel-loader' }],
       },
       {
         test: /.*\.(gif|png|jp(e*)g|svg)$/i,
@@ -30,22 +30,20 @@ module.exports = {
             loader: 'url-loader',
             options: {
               limit: 21000,
-              name: 'images/[name]_[hash:7].[ext]'
-            }
-          }
-        ]
+              name: 'images/[name]_[hash:7].[ext]',
+            },
+          },
+        ],
       },
       // Vendor CSS loader
       // This is necessary to pack third party libraries like antd
       {
         test: /\.css$/,
         include: path.resolve(__dirname, '../node_modules'),
-        use: [
-          'style-loader',
-          'css-loader'
-        ],
+        //use: ['css-loader', 'postcss-loader'],
+        use: ['style-loader', 'css-loader', 'postcss-loader'],
       },
-    ]
+    ],
   },
   plugins: [
     new HtmlWebPackPlugin({
@@ -53,6 +51,6 @@ module.exports = {
     }),
   ],
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
   },
 };
