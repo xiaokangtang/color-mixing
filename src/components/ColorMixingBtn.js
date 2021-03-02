@@ -14,6 +14,9 @@ const useStyles = createUseStyles({
     backgroundColor: (props) => props.colorMixing,
     // outline changes onclick to indicate btn getting clicked
     outline: (props) => props.outline,
+    '&:focus': {
+      outline: (props) => props.outline,
+    },
   },
 });
 
