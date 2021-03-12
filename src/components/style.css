@@ -1,20 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-h1 {
-  color: blue;
-}
+
 .body {
   display: flex;
 }
 .left {
   text-align: center;
-  width: 50%;
+  width: 100%;
   border: thin solid #ddd;
 }
 .right {
   text-align: center;
   padding: 10px;
-  width: 50%;
+  width: 100%;
   border: thin solid #ddd;
 }

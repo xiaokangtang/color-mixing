@@ -22,12 +22,13 @@ const Timer = (props) => {
 
   return props.gameStatus === STATUSES.complete ? (
     // Show user total time if complete
-    <div>
+    <div className="mb-10">
       <p>You used {seconds}s</p>
     </div>
   ) : (
-    <div>
-      <p>{seconds}</p>
+    <div className="mb-10">
+      <p>Game started!</p>
+      <p>Time(s): {seconds}</p>
     </div>
   );
 };

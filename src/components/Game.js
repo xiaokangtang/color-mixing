@@ -82,7 +82,9 @@ const Game = (props) => {
     to: {
       opacity: 1,
       color:
-        status === STATUSES.correct
+        gameStatus === STATUSES.complete
+          ? options.defaultFb
+          : status === STATUSES.correct
           ? options.correctFb
           : status === STATUSES.incorrect
           ? options.incorrectFb
@@ -114,43 +116,58 @@ const Game = (props) => {
 
   return (
     <div>
-      <h1>Color Mixing Game</h1>
-      {gameStatus === STATUSES.incomplete ? (
-        <div className="body">
-          <div className="left">
-            <MixedColor mixedColor={mixedColor} />
-          </div>
-          <div className="right">
-            {colorMixingArr.map((colorMixing) => {
-              const outline = checkBtnStatus(colorMixing);
-              console.log(outline);
-              return (
-                <ColorMixingBtn
-                  key={`color-${colorMixing}`}
-                  outline={outline}
-                  colorMixing={colorMixing}
-                  onClick={onBtnClick}
-                />
-              );
-            })}
+      <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
+        <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl px-4 sm:px-6 lg:px-8">
+          <span className="block text-indigo-600 xl:inline">
+            Color Mixing Game
+          </span>
+        </h1>
+        <div className="py-12 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <Timer gameStatus={gameStatus} />
+            {gameStatus === STATUSES.incomplete ? (
+              <div className="mb-10">
+                <dl className="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
+                  <div className="flex">
+                    <div className="left">
+                      <MixedColor mixedColor={mixedColor} />
+                    </div>
+                  </div>
+                  <div className="flex">
+                    <div className="right">
+                      {colorMixingArr.map((colorMixing) => {
+                        const outline = checkBtnStatus(colorMixing);
+                        console.log(outline);
+                        return (
+                          <ColorMixingBtn
+                            key={`color-${colorMixing}`}
+                            outline={outline}
+                            colorMixing={colorMixing}
+                            onClick={onBtnClick}
+                          />
+                        );
+                      })}
+                    </div>
+                  </div>
+                </dl>
+              </div>
+            ) : (
+              <PlayAgain onClick={props.startNewGame} />
+            )}
+            <animated.div style={fb}>
+              {gameStatus === STATUSES.complete ? (
+                <p>{correctNum} correct</p>
+              ) : status === STATUSES.correct ? (
+                <p>Correct!</p>
+              ) : status === STATUSES.incorrect ? (
+                <p>Incorrect!</p>
+              ) : (
+                <p>Please select</p>
+              )}
+            </animated.div>
           </div>
         </div>
-      ) : (
-        <PlayAgain onClick={props.startNewGame} />
-      )}
-
-      <animated.div style={fb}>
-        {gameStatus === STATUSES.complete ? (
-          <p>{correctNum} correct</p>
-        ) : status === STATUSES.correct ? (
-          <p>Correct!</p>
-        ) : status === STATUSES.incorrect ? (
-          <p>Incorrect!</p>
-        ) : (
-          <p>Please select</p>
-        )}
-      </animated.div>
-      <Timer gameStatus={gameStatus} />
+      </main>
     </div>
   );
 };
