@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useSpring, animated } from 'react-spring';
 
 import ColorMixingBtn from './ColorMixingBtn';
 import MixedColor from './MixedColor';
 import PlayAgain from './PlayAgain';
 import Timer from './Timer';
+import Instruction from './Instruction';
 import options from './options';
 
 const colors = options.colors;
@@ -76,23 +76,6 @@ const Game = (props) => {
     correctNum,
   } = useGamesetting();
 
-  //useSpring for feedback
-  const fb = useSpring({
-    from: { opacity: status === STATUSES.newSet ? 1 : 0 },
-    to: {
-      opacity: 1,
-      color:
-        gameStatus === STATUSES.complete
-          ? options.defaultFb
-          : status === STATUSES.correct
-          ? options.correctFb
-          : status === STATUSES.incorrect
-          ? options.incorrectFb
-          : options.defaultFb,
-    },
-    reset: true,
-  });
-
   //ColorMixingBtn onclick - check if there are 2 chosen colors
   const onBtnClick = (newColor) => {
     setChosenColors([...chosenColors, newColor]);
@@ -154,17 +137,12 @@ const Game = (props) => {
             ) : (
               <PlayAgain onClick={props.startNewGame} />
             )}
-            <animated.div style={fb}>
-              {gameStatus === STATUSES.complete ? (
-                <p>{correctNum} correct</p>
-              ) : status === STATUSES.correct ? (
-                <p>Correct!</p>
-              ) : status === STATUSES.incorrect ? (
-                <p>Incorrect!</p>
-              ) : (
-                <p>Please select</p>
-              )}
-            </animated.div>
+
+            <Instruction
+              gameStatus={gameStatus}
+              status={status}
+              correctNum={correctNum}
+            />
           </div>
         </div>
       </main>
