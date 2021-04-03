@@ -8,7 +8,7 @@ module.exports = merge(common, {
   mode: 'development',
   devtool: 'inline-source-map',
   devServer: {
-    publicPath: '/',
+    publicPath: '/color-mixing',
     port: 4242,
     historyApiFallback: true,
     overlay: true,
