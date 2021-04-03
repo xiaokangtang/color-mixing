@@ -8,7 +8,7 @@ module.exports = {
   output: {
     filename: '[name].[hash].js',
     path: path.resolve(__dirname, '../dist/'),
-    publicPath: '/',
+    publicPath: '/color-mixing',
   },
   devServer: {
     port: 3042,

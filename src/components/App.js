@@ -11,9 +11,9 @@ const App = () => {
     <div>
       <NavBar />
       <Router>
-        <Home path="/" />
+        <Home path="/color-mixing" />
         <Game
-          path="game"
+          path="/color-mixing/game"
           key={gameId}
           startNewGame={() => setGameId(gameId + 1)}
         />
