@@ -4,7 +4,7 @@
     A small game that tests your knowledge of color mixing! Given a secondary color, you will be asked to select the two primary colors. At the end of the game, you'll see how many correct answers you've got and how much time you've taken.
     <br />
     <br />
-    <a href="https://aiseatu.github.io/color-mixing/">View Production Demo Here</a>
+    <a href="https://xiaokangtang.github.io/color-mixing/">View Production Demo Here</a>
   </p>
 </p>
 
